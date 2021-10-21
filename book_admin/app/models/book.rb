@@ -10,7 +10,15 @@ class Book < ApplicationRecord
     book.errors[:name] << "I don't like exercise." if book.name.include?('exercise')
   end
 
+  before_validation :add_lovely_to_cat
+
   scope :costly, -> { where('price > ?', 3000) }
   scope :written_about, ->(theme) { where('name like ?', "%#{theme}%") }
   scope :find_price, ->(price) { find_by(price: price) }
+
+  def add_lovely_to_cat
+    self.name = name.gsub(/Cat/) do |matched|
+      "lovely #{matched}"
+    end
+  end
 end
