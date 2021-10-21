@@ -11,6 +11,9 @@ class Book < ApplicationRecord
   end
 
   before_validation :add_lovely_to_cat
+  after_destroy do
+    Rails.logger.info "Book is deleted: #{attributes}"
+  end
 
   scope :costly, -> { where('price > ?', 3000) }
   scope :written_about, ->(theme) { where('name like ?', "%#{theme}%") }
