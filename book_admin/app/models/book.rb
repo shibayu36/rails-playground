@@ -14,6 +14,10 @@ class Book < ApplicationRecord
   after_destroy do
     Rails.logger.info "Book is deleted: #{attributes}"
   end
+  after_destroy if: :high_price? do
+    Rails.logger.warn "Book with high price is deleted: #{attributes}"
+    Rails.logger.warn 'Please check!!'
+  end
 
   scope :costly, -> { where('price > ?', 3000) }
   scope :written_about, ->(theme) { where('name like ?', "%#{theme}%") }
@@ -23,5 +27,9 @@ class Book < ApplicationRecord
     self.name = name.gsub(/Cat/) do |matched|
       "lovely #{matched}"
     end
+  end
+
+  def high_price?
+    price >= 5000
   end
 end
