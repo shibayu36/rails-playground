@@ -4,9 +4,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show destroy]
   around_action :action_logger, only: [:destroy]
 
-  def show
-    render :show
-  end
+  def show; end
 
   def destroy
     @book.destroy
