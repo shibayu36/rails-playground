@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
   protect_from_forgery except: [:destroy]
 
+  before_action :detect_mobile_variant
   before_action :set_book, only: %i[show destroy]
   around_action :action_logger, only: [:destroy]
 
@@ -29,5 +30,9 @@ class BooksController < ApplicationController
     logger.info 'around-before'
     yield
     logger.info 'around-after'
+  end
+
+  def detect_mobile_variant
+    request.variant = :mobile if request.user_agent =~ /iPhone/
   end
 end
