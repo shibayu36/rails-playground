@@ -4,7 +4,12 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show destroy]
   around_action :action_logger, only: [:destroy]
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+    end
+  end
 
   def destroy
     @book.destroy
