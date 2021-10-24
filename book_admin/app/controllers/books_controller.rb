@@ -6,7 +6,7 @@ class BooksController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html { render layout: 'application' }
       format.json { render json: @book }
     end
   end
