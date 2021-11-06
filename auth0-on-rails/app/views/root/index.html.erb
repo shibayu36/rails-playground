@@ -1,2 +1,6 @@
+<% if session[:userinfo].present? %>
+  Login with <%= session[:userinfo][:nickname] %>
+<% end %>
+
 <%= button_to 'Login', '/auth/auth0', method: :post %>
 <%= button_to 'Logout', 'auth/logout', method: :get %>
