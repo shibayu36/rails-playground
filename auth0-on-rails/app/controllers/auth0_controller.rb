@@ -6,8 +6,10 @@ class Auth0Controller < ApplicationController
     auth_info = request.env['omniauth.auth']
     session[:userinfo] = auth_info['extra']['raw_info']
 
+    pp(auth_info)
+
     # Redirect to the URL you want after successful auth
-    redirect_to '/'
+    redirect_to '/dashboard'
   end
 
   def failure
