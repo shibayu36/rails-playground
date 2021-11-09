@@ -1,6 +1,6 @@
 defaults:
   run:
-    working-directory: scripts
+    working-directory: awesome_events/
 name: Awesome Events Rails Tests
 on: [push, pull_request]
 jobs:
