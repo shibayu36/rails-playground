@@ -1,6 +1,5 @@
 defaults:
   run:
-    shell: bash
     working-directory: scripts
 name: Awesome Events Rails Tests
 on: [push, pull_request]
