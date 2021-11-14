@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  # prepend_before_action do
+  #   require 'pry'
+  #   binding.pry
+  #   true
+  # end
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
