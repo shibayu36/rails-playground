@@ -9,5 +9,14 @@ RSpec.describe Bowling do
         expect(bowling.score).to eq 80
       end
     end
+
+    context 'mock sample' do
+      it 'calls once' do
+        bowling = Bowling.new
+        expect(bowling).not_to receive(:hit)
+        bowling.hit(4)
+        bowling.hit(4)
+      end
+    end
   end
 end
