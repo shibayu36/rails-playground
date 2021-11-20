@@ -117,6 +117,10 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jpmobile (6.1.2)
+      mail (~> 2.7.0)
+      rexml
+      scanf
     jwt (2.3.0)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -239,6 +243,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scanf (1.0.0)
     selenium-webdriver (4.0.3)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -292,6 +297,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   hamlit-rails
   jbuilder (~> 2.7)
+  jpmobile
   listen (~> 3.3)
   omniauth (~> 1.9.1)
   omniauth-github (~> 1.4.0)
