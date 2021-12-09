@@ -9,7 +9,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     callback_path: '/auth/auth0/callback',
     authorize_params: {
       scope: 'openid profile enroll read:authenticators remove:authenticators',
-      audience: 'https://dev-z4k69gje.us.auth0.com/mfa/'
+      audience: "https://#{AUTH0_CONFIG['auth0_domain']}/mfa/"
     }
   )
 end
