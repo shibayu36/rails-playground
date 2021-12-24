@@ -22,6 +22,10 @@ class Auth0Controller < ApplicationController
     redirect_to logout_url
   end
 
+  def redirect1; end
+
+  def redirect2; end
+
   private
 
   AUTH0_CONFIG = Rails.application.config_for(:auth0)
