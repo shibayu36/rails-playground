@@ -7,7 +7,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+    current_user || warden.authenticate!(scope: :user)
     # Put your resource owner authentication logic here.
     # Example implementation:
     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
@@ -28,6 +28,9 @@ Doorkeeper.configure do
   #     redirect_to sign_in_url
   #   end
   # end
+  admin_authenticator do
+    current_user || warden.authenticate!(scope: :user)
+  end
 
   # You can use your own model classes if you need to extend (or even override) default
   # Doorkeeper models such as `Application`, `AccessToken` and `AccessGrant.
