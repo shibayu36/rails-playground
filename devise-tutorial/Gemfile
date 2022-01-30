@@ -63,3 +63,5 @@ end
 
 gem 'pry-rails', :group => :development
 gem 'action_tracer', group: [:development, :test]
+
+gem "doorkeeper", "~> 5.5"
