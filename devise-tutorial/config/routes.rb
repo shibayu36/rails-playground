@@ -3,5 +3,8 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   root to: 'home#index'
+  get '/privacy' => 'privacy#index'
+  get '/my' => 'my#index'
+  get '/my/destroy' => 'my#destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
