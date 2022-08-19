@@ -10,7 +10,8 @@
     },
     {
       "matchManagers": ["bundler"],
-      "rangeStrategy": "update-lockfile"
+      "rangeStrategy": "update-lockfile",
+      "postUpdateOptions": ["bundlerConservative"]
     }
   ]
 }
