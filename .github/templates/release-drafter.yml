@@ -1,4 +1,5 @@
 commitish: main
+publish: true
 template: |
   ## What’s Changed
 
