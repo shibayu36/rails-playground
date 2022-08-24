@@ -1,1 +1,5 @@
 commitish: main
+template: |
+  ## What’s Changed
+
+  $CHANGES
