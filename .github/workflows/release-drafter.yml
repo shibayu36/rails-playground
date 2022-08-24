@@ -24,5 +24,6 @@ jobs:
           config-name: templates/release-drafter.yml
           name: ${{ steps.date.outputs.date }} リリース
           tag: ${{ steps.date.outputs.date }}
+          publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
