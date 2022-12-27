@@ -2,5 +2,5 @@
   Login with <%= session[:userinfo][:nickname] %>
 <% end %>
 
-<%= button_to 'Login', '/auth/auth0', method: :post %>
+<%= button_to 'Login', '/auth/auth0', method: :post, params: { connection: params['connection'] } %>
 <%= button_to 'Logout', 'auth/logout', method: :get %>
