@@ -3,4 +3,4 @@
 <% end %>
 
 <%= button_to 'Login', '/auth/auth0', method: :post, params: { connection: params['connection'] } %>
-<%= button_to 'Logout', 'auth/logout', method: :get %>
+<%= button_to 'Logout', 'auth/logout', method: :get, params: { connection: params['connection'] } %>
