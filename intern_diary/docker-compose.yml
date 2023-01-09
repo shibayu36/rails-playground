@@ -4,6 +4,8 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
   web:
     build: .
     command: bin/rails s -p 3000 -b '0.0.0.0'
@@ -17,3 +19,5 @@ services:
       DB_HOST: db
     depends_on:
       - db
+volumes:
+  db-data:
