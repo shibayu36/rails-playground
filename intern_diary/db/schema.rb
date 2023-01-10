@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_075111) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_09_081452) do
   create_table "diaries", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_diaries_on_user_id"
+  end
+
+  create_table "entries", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "diary_id", null: false
+    t.string "title", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diary_id"], name: "index_entries_on_diary_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -27,4 +36,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_075111) do
   end
 
   add_foreign_key "diaries", "users"
+  add_foreign_key "entries", "diaries"
 end
