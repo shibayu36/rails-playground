@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 case ARGV[0]
 in 'add'
   puts 'add command'
