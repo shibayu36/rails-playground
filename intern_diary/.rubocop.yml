@@ -7,3 +7,6 @@ AllCops:
     - "node_modules/**/*"
     - "Gemfile"
   NewCops: disable
+
+Style/Documentation:
+  Enabled: false
