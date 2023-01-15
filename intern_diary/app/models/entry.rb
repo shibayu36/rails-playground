@@ -2,4 +2,6 @@
 
 class Entry < ApplicationRecord
   belongs_to :diary
+
+  scope :recent_ordered, -> { order(id: :desc) }
 end
