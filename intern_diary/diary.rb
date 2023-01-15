@@ -10,8 +10,11 @@ in 'delete'
   puts 'delete command'
   puts ARGV[1..].join(' ')
 in 'list'
-  puts 'list command'
-  puts ARGV[1..].join(' ')
+  username = ARGV[1] || abort('username is required')
+  entries = ListCommand.exec(username)
+  entries.each do |entry|
+    puts entry.to_terminal_output
+  end
 else
   puts 'add, delete, list is required'
 end
