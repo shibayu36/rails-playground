@@ -6,7 +6,7 @@ RSpec.describe ListCommand do
   describe '#exec' do
     context 'when a user does not exist' do
       it 'returns nil' do
-        expect(ListCommand.exec('not_exist_user')).to be_nil
+        expect(described_class.exec('not_exist_user')).to be_nil
       end
     end
 
@@ -14,7 +14,7 @@ RSpec.describe ListCommand do
       let(:user) { create(:user) }
 
       it 'returns nil' do
-        expect(ListCommand.exec(user.name)).to be_nil
+        expect(described_class.exec(user.name)).to be_nil
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe ListCommand do
       end
 
       it 'lists entries with recent order' do
-        entries = ListCommand.exec(user.name)
+        entries = described_class.exec(user.name)
         expect(entries.size).to eq 2
         expect(entries[0]).to have_attributes(title: entry2.title, body: entry2.body)
         expect(entries[1]).to have_attributes(title: entry1.title, body: entry1.body)

@@ -6,7 +6,7 @@ RSpec.describe AddCommand do
   describe '.exec' do
     context 'when a user does not exist' do
       it 'creates a new user, and posts an entry' do
-        AddCommand.exec('new_username', 'title', 'body')
+        described_class.exec('new_username', 'title', 'body')
 
         user = User.find_by(name: 'new_username')
         expect(user).to be_present
@@ -22,7 +22,7 @@ RSpec.describe AddCommand do
       it 'creates a diary and adds an entry' do
         expect(user.diary).to be_nil
 
-        AddCommand.exec(user.name, 'title', 'body')
+        described_class.exec(user.name, 'title', 'body')
         user.reload
 
         expect(user.diary.name).to eq "#{user.name}'s diary"
@@ -41,8 +41,8 @@ RSpec.describe AddCommand do
       it 'adds an entry' do
         expect(user.diary.entries).to be_empty
 
-        AddCommand.exec(user.name, 'title1', 'body1')
-        AddCommand.exec(user.name, 'title2', 'body2')
+        described_class.exec(user.name, 'title1', 'body1')
+        described_class.exec(user.name, 'title2', 'body2')
 
         expect(user.diary.entries.size).to eq 2
         expect(user.diary.entries[0]).to have_attributes(title: 'title1', body: 'body1')
