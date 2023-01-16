@@ -20,3 +20,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ExampleLength:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 24
