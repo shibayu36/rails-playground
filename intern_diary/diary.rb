@@ -5,7 +5,8 @@ in 'add'
   username = ARGV[1] || abort('username is required')
   title = ARGV[2] || abort('title is required')
   body = ARGV[3] || abort('body is required')
-  AddCommand.exec(username, title, body)
+  error = AddCommand.exec(username, title, body)
+  abort(error) if error
 in 'delete'
   puts 'delete command'
   puts ARGV[1..].join(' ')
