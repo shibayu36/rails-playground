@@ -14,6 +14,12 @@ RSpec.describe AddCommand do
         expect(user.diary.entries.size).to eq 1
         expect(user.diary.entries[0]).to have_attributes(title: 'title', body: 'body')
       end
+
+      context 'when passed username is invalid' do
+        it 'returns error message' do
+          expect(described_class.exec('a', 'title', 'body')).to eq 'Name is too short (minimum is 3 characters)'
+        end
+      end
     end
 
     context 'when an user does not have a diary' do
@@ -47,6 +53,14 @@ RSpec.describe AddCommand do
         expect(user.diary.entries.size).to eq 2
         expect(user.diary.entries[0]).to have_attributes(title: 'title1', body: 'body1')
         expect(user.diary.entries[1]).to have_attributes(title: 'title2', body: 'body2')
+      end
+
+      context 'when passed title is invalid' do
+        it 'returns error message' do
+          expect(
+            described_class.exec(user.name, 'a' * 101, 'body1')
+          ).to eq 'Title is too long (maximum is 100 characters)'
+        end
       end
     end
   end
