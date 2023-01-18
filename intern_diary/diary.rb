@@ -8,8 +8,9 @@ in 'add'
   error = AddCommand.exec(username, title, body)
   abort(error) if error
 in 'delete'
-  puts 'delete command'
-  puts ARGV[1..].join(' ')
+  username = ARGV[1] || abort('username is required')
+  entry_id = ARGV[2] || abort('entry_id is required')
+  DeleteCommand.exec(username, entry_id)
 in 'list'
   username = ARGV[1] || abort('username is required')
   entries = ListCommand.exec(username)
