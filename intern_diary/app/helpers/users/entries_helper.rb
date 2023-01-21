@@ -1,0 +1,2 @@
+module Users::EntriesHelper
+end
