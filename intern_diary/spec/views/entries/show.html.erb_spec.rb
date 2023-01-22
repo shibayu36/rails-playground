@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users/entries/show', type: :view do
+RSpec.describe 'entries/show', type: :view do
   before do
-    assign(:users_entry, Entry.create!)
+    assign(:entry, Entry.create!)
   end
 
   it 'renders attributes in <p>' do

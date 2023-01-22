@@ -6,9 +6,9 @@
   <% @entries.each do |entry| %>
     <%= render entry %>
     <p>
-      <%= link_to "Show this entry", [:users, entry] %>
+      <%= link_to "Show this entry", entry_path(id: entry.id) %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New entry", new_users_entry_path %>
+<%= link_to "New entry", new_entry_path %>

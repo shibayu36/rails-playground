@@ -29,7 +29,7 @@ RSpec.describe '/entries', type: :request do
   describe 'GET /index' do
     it 'renders a successful response' do
       Entry.create! valid_attributes
-      get users_entries_url
+      get entries_url
       expect(response).to be_successful
     end
   end
@@ -37,14 +37,14 @@ RSpec.describe '/entries', type: :request do
   describe 'GET /show' do
     it 'renders a successful response' do
       entry = Entry.create! valid_attributes
-      get users_entry_url(entry)
+      get entry_url(entry)
       expect(response).to be_successful
     end
   end
 
   describe 'GET /new' do
     it 'renders a successful response' do
-      get new_users_entry_url
+      get new_entry_url
       expect(response).to be_successful
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe '/entries', type: :request do
   describe 'GET /edit' do
     it 'renders a successful response' do
       entry = Entry.create! valid_attributes
-      get edit_users_entry_url(entry)
+      get edit_entry_url(entry)
       expect(response).to be_successful
     end
   end
@@ -61,25 +61,25 @@ RSpec.describe '/entries', type: :request do
     context 'with valid parameters' do
       it 'creates a new Entry' do
         expect do
-          post users_entries_url, params: { entry: valid_attributes }
+          post entries_url, params: { entry: valid_attributes }
         end.to change(Entry, :count).by(1)
       end
 
       it 'redirects to the created entry' do
-        post users_entries_url, params: { entry: valid_attributes }
-        expect(response).to redirect_to(users_entry_url(Entry.last))
+        post entries_url, params: { entry: valid_attributes }
+        expect(response).to redirect_to(entry_url(Entry.last))
       end
     end
 
     context 'with invalid parameters' do
       it 'does not create a new Entry' do
         expect do
-          post users_entries_url, params: { entry: invalid_attributes }
+          post entries_url, params: { entry: invalid_attributes }
         end.to change(Entry, :count).by(0)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post users_entries_url, params: { entry: invalid_attributes }
+        post entries_url, params: { entry: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -93,14 +93,14 @@ RSpec.describe '/entries', type: :request do
 
       it 'updates the requested entry' do
         entry = Entry.create! valid_attributes
-        patch users_entry_url(entry), params: { entry: new_attributes }
+        patch entry_url(entry), params: { entry: new_attributes }
         entry.reload
         skip('Add assertions for updated state')
       end
 
       it 'redirects to the entry' do
         entry = Entry.create! valid_attributes
-        patch users_entry_url(entry), params: { entry: new_attributes }
+        patch entry_url(entry), params: { entry: new_attributes }
         entry.reload
         expect(response).to redirect_to(entry_url(entry))
       end
@@ -109,7 +109,7 @@ RSpec.describe '/entries', type: :request do
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         entry = Entry.create! valid_attributes
-        patch users_entry_url(entry), params: { entry: invalid_attributes }
+        patch entry_url(entry), params: { entry: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -119,14 +119,14 @@ RSpec.describe '/entries', type: :request do
     it 'destroys the requested entry' do
       entry = Entry.create! valid_attributes
       expect do
-        delete users_entry_url(entry)
+        delete entry_url(entry)
       end.to change(Entry, :count).by(-1)
     end
 
     it 'redirects to the entries list' do
       entry = Entry.create! valid_attributes
-      delete users_entry_url(entry)
-      expect(response).to redirect_to(users_entries_url)
+      delete entry_url(entry)
+      expect(response).to redirect_to(entries_url)
     end
   end
 end

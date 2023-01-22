@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users/entries/edit', type: :view do
-  let(:users_entry) do
+RSpec.describe 'entries/edit', type: :view do
+  let(:entry) do
     Entry.create!
   end
 
   before do
-    assign(:users_entry, users_entry)
+    assign(:entry, entry)
   end
 
-  it 'renders the edit users_entry form' do
+  it 'renders the edit entry form' do
     render
 
-    assert_select 'form[action=?][method=?]', users_entry_path(users_entry), 'post' do
+    assert_select 'form[action=?][method=?]', entry_path(entry), 'post' do
     end
   end
 end

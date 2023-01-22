@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users/entries/index', type: :view do
+RSpec.describe 'entries/index', type: :view do
   before do
     assign(:entries, [
              Entry.create!,
@@ -10,7 +10,7 @@ RSpec.describe 'users/entries/index', type: :view do
            ])
   end
 
-  it 'renders a list of users/entries' do
+  it 'renders a list of entries' do
     render
     cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
   end
