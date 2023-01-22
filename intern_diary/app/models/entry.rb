@@ -9,9 +9,9 @@ class Entry < ApplicationRecord
   validates :body, length: { maximum: 60_000 }
 
   def to_terminal_output
-    <<~EOS
+    <<~TERMINAL_OUTPUT
       [#{id}] #{title} @#{created_at.strftime('%Y-%m-%d')}
       #{body}
-    EOS
+    TERMINAL_OUTPUT
   end
 end
