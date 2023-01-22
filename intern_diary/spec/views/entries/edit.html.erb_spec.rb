@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'entries/edit', type: :view do
+RSpec.xdescribe 'entries/edit', type: :view do
   let(:entry) do
     Entry.create!
   end

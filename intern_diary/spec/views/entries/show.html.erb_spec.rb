@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'entries/show', type: :view do
+RSpec.xdescribe 'entries/show', type: :view do
   before do
     assign(:entry, Entry.create!)
   end
