@@ -43,4 +43,28 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#recent_entries' do
+    context 'when a user has a diary' do
+      let(:user) { create(:user) }
+      let(:diary) { create(:diary, user:) }
+
+      before do
+        create(:entry, diary:)
+        create(:entry, diary:)
+      end
+
+      it 'returns recent entries of the diary' do
+        expect(user.recent_entries).to eq diary.entries.recent_ordered
+      end
+    end
+
+    context 'when a user does not have a diary' do
+      let(:user) { create(:user) }
+
+      it 'returns an empty array' do
+        expect(user.recent_entries).to eq []
+      end
+    end
+  end
 end
