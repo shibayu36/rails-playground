@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :diary do
+    association :user
     sequence(:name) { |n| "diary#{n}" }
   end
 end
