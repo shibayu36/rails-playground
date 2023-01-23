@@ -21,5 +21,11 @@ services:
       DB_HOST: db
     depends_on:
       - db
+  tailwind:
+    build: .
+    command: bin/rails tailwindcss:watch
+    tty: true
+    volumes:
+      - .:/app
 volumes:
   db-data:
