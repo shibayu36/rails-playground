@@ -3,9 +3,9 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: %i[show edit update destroy]
 
-  # GET /entries or /entries.json
+  # GET /users/:username/entries
   def index
-    @entries = Entry.all
+    @entries = User.find_by!(name: params[:username]).recent_entries
   end
 
   # GET /entries/1 or /entries/1.json

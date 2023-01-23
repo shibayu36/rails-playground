@@ -14,7 +14,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.xdescribe '/entries', type: :request do
+RSpec.describe '/users/:username/entries', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
@@ -27,14 +27,23 @@ RSpec.xdescribe '/entries', type: :request do
   end
 
   describe 'GET /index' do
+    let!(:user) { create(:user) }
+    let!(:diary) { create(:diary, user:) }
+    let!(:entry1) { create(:entry, diary:) }
+    let!(:entry2) { create(:entry, diary:) }
+
+    let!(:other_entry) { create(:entry) }
+
     it 'renders a successful response' do
-      Entry.create! valid_attributes
-      get entries_url
+      get entries_url(username: user.name)
       expect(response).to be_successful
+      expect(response.body).to include(entry1.title)
+      expect(response.body).to include(entry2.title)
+      expect(response.body).not_to include(other_entry.title)
     end
   end
 
-  describe 'GET /show' do
+  xdescribe 'GET /show' do
     it 'renders a successful response' do
       entry = Entry.create! valid_attributes
       get entry_url(entry)
@@ -42,14 +51,14 @@ RSpec.xdescribe '/entries', type: :request do
     end
   end
 
-  describe 'GET /new' do
+  xdescribe 'GET /new' do
     it 'renders a successful response' do
       get new_entry_url
       expect(response).to be_successful
     end
   end
 
-  describe 'GET /edit' do
+  xdescribe 'GET /edit' do
     it 'renders a successful response' do
       entry = Entry.create! valid_attributes
       get edit_entry_url(entry)
@@ -57,7 +66,7 @@ RSpec.xdescribe '/entries', type: :request do
     end
   end
 
-  describe 'POST /create' do
+  xdescribe 'POST /create' do
     context 'with valid parameters' do
       it 'creates a new Entry' do
         expect do
@@ -85,7 +94,7 @@ RSpec.xdescribe '/entries', type: :request do
     end
   end
 
-  describe 'PATCH /update' do
+  xdescribe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
         skip('Add a hash of attributes valid for your model')
@@ -115,7 +124,7 @@ RSpec.xdescribe '/entries', type: :request do
     end
   end
 
-  describe 'DELETE /destroy' do
+  xdescribe 'DELETE /destroy' do
     it 'destroys the requested entry' do
       entry = Entry.create! valid_attributes
       expect do
