@@ -31,3 +31,6 @@ Style/ClassAndModuleChildren:
   Exclude:
     - "app/controllers/**/*"
     - "app/helpers/**/*"
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
