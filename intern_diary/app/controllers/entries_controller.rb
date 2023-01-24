@@ -8,7 +8,7 @@ class EntriesController < ApplicationController
     @entries = User.find_by!(name: params[:username]).recent_entries
   end
 
-  # GET /entries/1 or /entries/1.json
+  # GET /users/:username/entries/1
   def show; end
 
   # GET /entries/new
@@ -61,7 +61,10 @@ class EntriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_entry
-    @entry = Entry.find(params[:id])
+    diary = User.find_by!(name: params[:username]).diary
+    raise ActiveRecord::RecordNotFound unless diary
+
+    @entry = diary.entries.find_by!(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.

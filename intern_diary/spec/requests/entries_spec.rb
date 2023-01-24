@@ -43,11 +43,42 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'GET /show' do
-    it 'renders a successful response' do
-      entry = Entry.create! valid_attributes
-      get entry_url(entry)
+  describe 'GET /show' do
+    let!(:user) { create(:user) }
+    let!(:diary) { create(:diary, user:) }
+    let!(:entry1) { create(:entry, diary:) }
+    let!(:entry2) { create(:entry, diary:) }
+
+    it 'renders the specified entry content' do
+      get entry_url(username: user.name, id: entry1.id)
       expect(response).to be_successful
+      expect(response.body).to include(entry1.title)
+      expect(response.body).not_to include(entry2.title)
+    end
+
+    context 'when an user is not found' do
+      it 'returns 404' do
+        get entry_url(username: 'not_found_name', id: entry1.id)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when a diary of the user is not found' do
+      let(:no_diary_user) { create(:user) }
+
+      it 'returns 404' do
+        get entry_url(username: no_diary_user.name, id: entry1.id)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when an entry does not belong to the diary' do
+      let(:other_entry) { create(:entry) }
+
+      it 'returns 404' do
+        get entry_url(username: user.name, id: other_entry.id)
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 
