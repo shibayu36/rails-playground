@@ -61,10 +61,16 @@ class EntriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_entry
+    diary = diary_by_path
+
+    @entry = diary.entries.find_by!(id: params[:id])
+  end
+
+  def diary_by_path
     diary = User.find_by!(name: params[:username]).diary
     raise ActiveRecord::RecordNotFound unless diary
 
-    @entry = diary.entries.find_by!(id: params[:id])
+    diary
   end
 
   # Only allow a list of trusted parameters through.
