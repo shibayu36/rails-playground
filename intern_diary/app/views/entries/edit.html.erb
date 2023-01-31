@@ -1,6 +1,6 @@
 <h1>Editing entry</h1>
 
-<%= render "form", entry: @entry %>
+<%= render "form", entry: @entry, form_url: entry_path(params[:username], @entry.id) %>
 
 <br>
 
