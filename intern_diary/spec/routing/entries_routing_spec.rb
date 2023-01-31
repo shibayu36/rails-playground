@@ -33,8 +33,12 @@ RSpec.describe EntriesController, type: :routing do
       expect(get: '/entries/1/edit').to route_to('entries#edit', id: '1')
     end
 
-    xit 'routes to #create' do
-      expect(post: '/entries').to route_to('entries#create')
+    it 'routes to #create' do
+      expect(post: '/users/shibayu36/entries').to route_to(
+        controller: 'entries',
+        action: 'create',
+        username: 'shibayu36'
+      )
     end
 
     xit 'routes to #update via PUT' do

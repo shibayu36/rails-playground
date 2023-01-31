@@ -103,30 +103,32 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new Entry' do
-        expect do
-          post entries_url, params: { entry: valid_attributes }
-        end.to change(Entry, :count).by(1)
-      end
+  describe 'POST /create' do
+    let(:diary) { create(:diary) }
 
-      it 'redirects to the created entry' do
-        post entries_url, params: { entry: valid_attributes }
-        expect(response).to redirect_to(entry_url(Entry.last))
+    context 'with valid parameters' do
+      let(:entry_params) { { title: 'title1', body: 'body1' } }
+
+      it 'creates a new Entry, and redirects to the entry url' do
+        post entries_url(diary.user.name), params: { entry: entry_params }
+
+        expect(diary.entries.count).to eq 1
+        expect(diary.entries.first).to have_attributes({ title: 'title1', body: 'body1' })
+
+        expect(response).to redirect_to(entry_url(diary.user.name, diary.entries.last))
       end
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Entry' do
-        expect do
-          post entries_url, params: { entry: invalid_attributes }
-        end.to change(Entry, :count).by(0)
-      end
+      let(:entry_params) { { title: 't' * 101, body: 'body1' } }
 
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post entries_url, params: { entry: invalid_attributes }
+      it 'does not create a new entry, and shows error message' do
+        post entries_url(diary.user.name), params: { entry: entry_params }
+
+        expect(diary.entries.count).to eq 0
+
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include('Title is too long (maximum is 100 characters)')
       end
     end
   end
