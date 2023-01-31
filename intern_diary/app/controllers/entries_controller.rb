@@ -23,38 +23,27 @@ class EntriesController < ApplicationController
   def create
     @entry = diary_by_path.entries.build(entry_params)
 
-    respond_to do |format|
-      if @entry.save
-        format.html { redirect_to entry_url(params[:username], @entry), notice: 'Entry was successfully created.' }
-        format.json { render :show, status: :created, location: @entry }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
+    if @entry.save
+      redirect_to entry_url(params[:username], @entry), notice: 'Entry was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /entries/1 or /entries/1.json
+  # PATCH/PUT /entries/1
   def update
-    respond_to do |format|
-      if @entry.update(entry_params)
-        format.html { redirect_to entry_url(@entry), notice: 'Entry was successfully updated.' }
-        format.json { render :show, status: :ok, location: @entry }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
+    if @entry.update(entry_params)
+      redirect_to entry_url(@entry), notice: 'Entry was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /entries/1 or /entries/1.json
+  # DELETE /entries/1
   def destroy
     @entry.destroy
 
-    respond_to do |format|
-      format.html { redirect_to entries_url, notice: 'Entry was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to entries_url, notice: 'Entry was successfully destroyed.'
   end
 
   private
