@@ -11,21 +11,21 @@ class EntriesController < ApplicationController
   # GET /users/:username/entries/1
   def show; end
 
-  # GET /entries/new
+  # GET /users/:username/entries/new
   def new
-    @entry = Entry.new
+    @entry = diary_by_path.entries.build
   end
 
   # GET /entries/1/edit
   def edit; end
 
-  # POST /entries or /entries.json
+  # POST /users/:username/entries
   def create
-    @entry = Entry.new(entry_params)
+    @entry = diary_by_path.entries.build(entry_params)
 
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to entry_url(@entry), notice: 'Entry was successfully created.' }
+        format.html { redirect_to entry_url(params[:username], @entry), notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -75,6 +75,6 @@ class EntriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def entry_params
-    params.fetch(:entry, {})
+    params.require(:entry).permit(:title, :body)
   end
 end
