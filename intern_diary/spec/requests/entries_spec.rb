@@ -82,9 +82,15 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'GET /new' do
+  describe 'GET /new' do
+    let!(:user) { create(:user) }
+
+    before do
+      create(:diary, user:)
+    end
+
     it 'renders a successful response' do
-      get new_entry_url
+      get new_entry_url(username: user.name)
       expect(response).to be_successful
     end
   end

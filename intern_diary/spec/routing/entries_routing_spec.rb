@@ -12,8 +12,12 @@ RSpec.describe EntriesController, type: :routing do
       )
     end
 
-    xit 'routes to #new' do
-      expect(get: '/entries/new').to route_to('entries#new')
+    it 'routes to #new' do
+      expect(get: '/users/shibayu36/entries/new').to route_to(
+        controller: 'entries',
+        action: 'new',
+        username: 'shibayu36'
+      )
     end
 
     it 'routes to #show' do
