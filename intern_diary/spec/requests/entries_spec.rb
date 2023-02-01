@@ -95,11 +95,30 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'GET /edit' do
+  describe 'GET /edit' do
+    let!(:user) { create(:user) }
+    let!(:diary) { create(:diary, user:) }
+    let!(:entry) { create(:entry, diary:) }
+
     it 'renders a successful response' do
-      entry = Entry.create! valid_attributes
-      get edit_entry_url(entry)
+      get edit_entry_url(username: user.name, id: entry.id)
       expect(response).to be_successful
+    end
+
+    context 'when an user is not found' do
+      it 'returns 404' do
+        get edit_entry_url(username: 'not_found_name', id: entry.id)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when an entry does not belong to the diary' do
+      let(:other_entry) { create(:entry) }
+
+      it 'returns 404' do
+        get edit_entry_url(username: user.name, id: other_entry.id)
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 
