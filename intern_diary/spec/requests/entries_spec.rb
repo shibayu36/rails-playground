@@ -180,18 +180,37 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'DELETE /destroy' do
-    it 'destroys the requested entry' do
-      entry = Entry.create! valid_attributes
-      expect do
-        delete entry_url(entry)
-      end.to change(Entry, :count).by(-1)
+  describe 'DELETE /destroy' do
+    let!(:user) { create(:user) }
+    let!(:diary) { create(:diary, user:) }
+    let!(:entry1) { create(:entry, diary:) }
+    let!(:entry2) { create(:entry, diary:) }
+
+    it 'destroys the requested entry, and redirects to the entries url' do
+      delete entry_url(username: user.name, id: entry1.id)
+
+      expect(diary.entries.count).to eq 1
+      expect(diary.entries.first.id).to eq entry2.id
+
+      expect(response).to redirect_to(entries_url(username: user.name))
     end
 
-    it 'redirects to the entries list' do
-      entry = Entry.create! valid_attributes
-      delete entry_url(entry)
-      expect(response).to redirect_to(entries_url)
+    context 'when an user is not found' do
+      it 'returns 404' do
+        delete entry_url(username: 'not_found_name', id: entry1.id)
+        expect(response).to have_http_status(:not_found)
+        expect(diary.entries.count).to eq 2
+      end
+    end
+
+    context 'when an entry does not belong to the diary' do
+      let(:other_entry) { create(:entry) }
+
+      it 'returns 404' do
+        delete entry_url(username: user.name, id: other_entry.id)
+        expect(response).to have_http_status(:not_found)
+        expect(diary.entries.count).to eq 2
+      end
     end
   end
 end

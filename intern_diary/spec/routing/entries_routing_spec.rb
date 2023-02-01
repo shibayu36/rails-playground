@@ -64,8 +64,13 @@ RSpec.describe EntriesController, type: :routing do
       )
     end
 
-    xit 'routes to #destroy' do
-      expect(delete: '/entries/1').to route_to('entries#destroy', id: '1')
+    it 'routes to #destroy' do
+      expect(delete: '/users/shibayu36/entries/1').to route_to(
+        controller: 'entries',
+        action: 'destroy',
+        username: 'shibayu36',
+        id: '1'
+      )
     end
   end
 end

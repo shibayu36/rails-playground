@@ -39,7 +39,7 @@ class EntriesController < ApplicationController
     end
   end
 
-  # DELETE /entries/1
+  # DELETE /users/:username/entries/1
   def destroy
     @entry.destroy
 
