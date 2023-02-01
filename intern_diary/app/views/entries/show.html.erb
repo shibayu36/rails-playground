@@ -3,7 +3,7 @@
 <%= render @entry %>
 
 <div>
-  <%= link_to "Edit this entry", edit_entry_path(@entry) %> |
+  <%= link_to "Edit this entry", edit_entry_path(id: @entry.id) %> |
   <%= link_to "Back to entries", entries_path %>
 
   <%= button_to "Destroy this entry", entry_path(@entry), method: :delete %>

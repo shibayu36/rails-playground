@@ -133,32 +133,49 @@ RSpec.describe '/users/:username/entries', type: :request do
     end
   end
 
-  xdescribe 'PATCH /update' do
+  describe 'PATCH /update' do
+    let!(:user) { create(:user) }
+    let!(:diary) { create(:diary, user:) }
+    let!(:entry) { create(:entry, diary:) }
+
     context 'with valid parameters' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      let(:entry_params) { { title: 'updated title', body: 'updated body' } }
 
-      it 'updates the requested entry' do
-        entry = Entry.create! valid_attributes
-        patch entry_url(entry), params: { entry: new_attributes }
-        entry.reload
-        skip('Add assertions for updated state')
-      end
+      it 'updates the requested entry, and redirects to the entry url' do
+        patch entry_url(username: user.name, id: entry.id), params: { entry: entry_params }
 
-      it 'redirects to the entry' do
-        entry = Entry.create! valid_attributes
-        patch entry_url(entry), params: { entry: new_attributes }
-        entry.reload
-        expect(response).to redirect_to(entry_url(entry))
+        expect(entry.reload).to have_attributes({ title: 'updated title', body: 'updated body' })
+
+        expect(response).to redirect_to(entry_url(user.name, entry))
       end
     end
 
     context 'with invalid parameters' do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        entry = Entry.create! valid_attributes
-        patch entry_url(entry), params: { entry: invalid_attributes }
+      let(:entry_params) { { title: 't' * 101, body: 'body2' } }
+
+      it 'does not update the requested entry, and shows error message' do
+        patch entry_url(username: user.name, id: entry.id), params: { entry: entry_params }
+
+        expect(entry.reload).not_to have_attributes({ title: 'title2', body: 'body2' })
+
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include('Title is too long (maximum is 100 characters)')
+      end
+    end
+
+    context 'when an user is not found' do
+      it 'returns 404' do
+        patch entry_url(username: 'not_found_name', id: entry.id)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when an entry does not belong to the diary' do
+      let(:other_entry) { create(:entry) }
+
+      it 'returns 404' do
+        patch entry_url(username: user.name, id: other_entry.id)
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

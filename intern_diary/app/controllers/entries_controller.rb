@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
     @entry = diary_by_path.entries.build
   end
 
-  # GET /entries/1/edit
+  # GET /users/:username/entries/1/edit
   def edit; end
 
   # POST /users/:username/entries
@@ -30,10 +30,10 @@ class EntriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /entries/1
+  # PATCH/PUT /users/:username/entries/1
   def update
     if @entry.update(entry_params)
-      redirect_to entry_url(@entry), notice: 'Entry was successfully updated.'
+      redirect_to entry_url(params[:username], @entry), notice: 'Entry was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end

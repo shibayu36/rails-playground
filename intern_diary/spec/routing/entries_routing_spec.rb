@@ -29,8 +29,13 @@ RSpec.describe EntriesController, type: :routing do
       )
     end
 
-    xit 'routes to #edit' do
-      expect(get: '/entries/1/edit').to route_to('entries#edit', id: '1')
+    it 'routes to #edit' do
+      expect(get: '/users/shibayu36/entries/1/edit').to route_to(
+        controller: 'entries',
+        action: 'edit',
+        username: 'shibayu36',
+        id: '1'
+      )
     end
 
     it 'routes to #create' do
@@ -41,12 +46,22 @@ RSpec.describe EntriesController, type: :routing do
       )
     end
 
-    xit 'routes to #update via PUT' do
-      expect(put: '/entries/1').to route_to('entries#update', id: '1')
+    it 'routes to #update via PUT' do
+      expect(put: '/users/shibayu36/entries/1').to route_to(
+        controller: 'entries',
+        action: 'update',
+        username: 'shibayu36',
+        id: '1'
+      )
     end
 
-    xit 'routes to #update via PATCH' do
-      expect(patch: '/entries/1').to route_to('entries#update', id: '1')
+    it 'routes to #update via PATCH' do
+      expect(patch: '/users/shibayu36/entries/1').to route_to(
+        controller: 'entries',
+        action: 'update',
+        username: 'shibayu36',
+        id: '1'
+      )
     end
 
     xit 'routes to #destroy' do
